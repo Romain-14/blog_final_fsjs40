@@ -12,7 +12,7 @@ const userSlice = createSlice({
 	name: "user",
 	initialState,
 	reducers: {
-		login(state, action) {
+		login(state, action) { // lié à la connexion
 			state.username = action.payload.username;
 			state.password = "";
 			state.isLogged = true;
@@ -20,21 +20,23 @@ const userSlice = createSlice({
 				? "user.png"
 				: action.payload.avatar;
 		},
-		logout(state) {
+		logout(state) { // lié à la déconnexion
 			state.username = "";
 			state.isLogged = false;
 			state.avatar = "user.png";
 		},
-		setMsg(state, action) {
-            console.log(action.payload)
+		setMsg(state, action) { // lié à la modification du message d'erreur dans le formulaire de connexion/création
 			state.msg = action.payload;
 		},
-		updateField(state, action) {
+        setAvatar(state, action) { // lié à la modification de l'avatar dans le dashboard
+            state.avatar = action.payload;
+        },
+		updateField(state, action) { // lié au formulaire de connexion/création
 			state.username = action.payload.username;
 			state.password = action.payload.password;
 		},
 	},
 });
 
-export const { login, logout, updateField, setMsg } = userSlice.actions;
+export const { login, logout, updateField, setMsg, setAvatar } = userSlice.actions;
 export default userSlice.reducer;

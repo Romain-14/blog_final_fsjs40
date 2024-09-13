@@ -58,6 +58,11 @@ h6 {
 	font-weight: bold;
 }
 
+.disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
 header {
 	display: flex;
 	justify-content: space-between;
@@ -189,7 +194,15 @@ form {
 	}
 }
 
-// 
+// DASHBOARD
+
+#dashboard {
+    img {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+    }
+}
 
 .error {
     color: red;

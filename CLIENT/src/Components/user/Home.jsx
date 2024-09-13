@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import DOMPurify from "dompurify";
+import useCloseMenu from "../../Hook/useCloseMenu";
 
 const Home = () => {
+    useCloseMenu();
 	const [stories, setStories] = useState([]);
 
 	useEffect(() => {

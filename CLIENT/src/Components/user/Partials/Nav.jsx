@@ -7,7 +7,7 @@ import {
 	faRightToBracket,
 	faUser,
 } from "@fortawesome/free-solid-svg-icons";
-import { NavLink } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 
 import { toggleMenu } from "../../../store/Slices/menu";
 import { logout } from "../../../store/Slices/user";
@@ -16,6 +16,7 @@ function Nav() {
 	const user = useSelector((state) => state.user);
 	const menu = useSelector((state) => state.menu);
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
 
 	const [type, setType] = useState(
 		window.innerWidth > 600 ? "tabletAndMore" : "mobile"
@@ -36,6 +37,22 @@ function Nav() {
 			window.removeEventListener("resize", handleResize);
 		};
 	}, []);
+
+	function onClickLogout() {
+		async function fetchLogout() {
+			const response = await fetch("/api/v1/authentication/logout", {
+				method: "POST",
+				credentials: "include",
+			});
+			console.log(response);
+			if (response.status === 200) {
+				dispatch(logout());
+				dispatch(toggleMenu());
+				navigate("/");
+			}
+		}
+		fetchLogout();
+	}
 
 	return (
 		<>
@@ -59,9 +76,8 @@ function Nav() {
 						<NavLink to={"/dashboard"}>
 							<FontAwesomeIcon icon={faUser} /> profil
 						</NavLink>
-						<button onClick={() => dispatch(logout())}>
-							<FontAwesomeIcon icon={faRightFromBracket} /> Se
-							déconnecter
+						<button onClick={onClickLogout}>
+							<FontAwesomeIcon icon={faRightFromBracket} />
 						</button>
 					</>
 				) : (

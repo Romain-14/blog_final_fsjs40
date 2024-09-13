@@ -35,6 +35,7 @@ function Login() {
 			setMsg("Remplissez tous les champs");
 			return; // on sort de la fonction si les champs ne sont pas remplis
 		}
+        
         // sinon on envoie les données au serveur au format JSON sur une route post
 		const response = await fetch("/api/v1/authentication/login", {
 			method: "POST",
