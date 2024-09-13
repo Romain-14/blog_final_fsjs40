@@ -35,6 +35,11 @@ app.use("/img", express.static(path.join(process.cwd(), "public/img")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+app.use((req, res, next) => {
+    console.log("user session", req.session.user);
+    next();
+})
+
 app.use(["/api/v1", "/"], ROUTER);
 
 app.listen(PORT, () =>

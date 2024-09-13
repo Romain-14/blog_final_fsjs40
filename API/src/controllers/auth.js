@@ -38,7 +38,8 @@ const login = async (req, res) => {
             const match = await bcrypt.compare(password, user.password);
             if(match){
                 const [[userInfos]] = await Auth.findUserInfoById(user.id);
-                req.session.user = userInfos;
+                req.session.user = {id: user.id, ...userInfos};
+                
                 res.status(200).json({ msg: "User logged in", userInfos });
             } else {
                 res.status(400).json({ msg: "Invalid credentials" });
@@ -50,4 +51,16 @@ const login = async (req, res) => {
     }
 }
 
-export { create, login };
+const logout = async (req, res) => {
+    try{
+        // destruction de la session en BDD (store sql)
+        req.session.destroy();
+        // suppression du cookie de session
+        res.clearCookie("connect.sid");
+        res.status(200).json({ msg: "User logged out" });
+    } catch(err){
+        res.status(500).json({ msg: err });
+    }
+}
+
+export { create, login, logout };
