@@ -3,7 +3,7 @@
 export default (req, res, next) => {
 	console.log("i'm the middleware !!!", req.session);
 	console.log("i'm the middleware suite -> !!!", req.session.user);
-	if (req.session) {
+	if (req.session.user) {
 		if (req.session.user.role === "user") {
 			next();
 		}
