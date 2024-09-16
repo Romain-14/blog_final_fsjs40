@@ -2,7 +2,7 @@ import User from '../model/User.js';
 
 const updateAvatar = async (req, res) => {
     const { id } = req.session.user;
-    const { avatar_id } = req.params;    
+    const { avatar_id } = req.params;
     const [response] = await User.updateAvatar(avatar_id, id);
     
     if(response.affectedRows === 1) {

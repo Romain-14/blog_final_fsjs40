@@ -30,14 +30,16 @@ function AvatarList() {
 		e.preventDefault();
         // si aucun nouvel avatar n'est sélectionné, on ne fait rien (pas de fetch)
 		if (!newAvatar) return;
+        console.log("newAvatar", newAvatar)
 		const response = await fetch(`/api/v1/user/avatar/${newAvatar}`, {
 			method: "PATCH",
 			credentials: "include",
 		});
         // voir également la route du fetch -> updateAvatar du fichier controller/user.js
-		const datas = await response.json();
+		const data = await response.json();
+        console.log(data)
         // mise à jour du state avatar avec le nouvel avatar
-		dispatch(setAvatar(datas.newAvatar));
+		dispatch(setAvatar(data.newAvatar));
 	}
 
 	return (

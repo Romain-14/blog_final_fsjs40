@@ -2,41 +2,56 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
 	username: "",
-	password: "",
 	avatar: "user.png",
 	isLogged: false,
 	msg: "",
+	role: "user", 
+	authError: null, 
 };
 
 const userSlice = createSlice({
 	name: "user",
 	initialState,
 	reducers: {
-		login(state, action) { // lié à la connexion
-			state.username = action.payload.username;
-			state.password = "";
-			state.isLogged = true;
-			state.avatar = !action.payload.avatar
-				? "user.png"
-				: action.payload.avatar;
+		login(state, action) {
+			console.log("action.payload", action.payload);
+			state.username = action.payload.user.username;
+			state.isLogged = action.payload.isLogged;
+			state.avatar = action.payload.user.avatar || "user.png";
+			state.role = action.payload.user.role || "user"; 
+			state.authError = null;
 		},
-		logout(state) { // lié à la déconnexion
+		loginFailed(state, action) {
+			state.authError = action.payload.error;
+		},
+		logout(state, action) {
 			state.username = "";
-			state.isLogged = false;
+			state.isLogged = action.payload.isLogged;
 			state.avatar = "user.png";
+			state.role = "user";
 		},
-		setMsg(state, action) { // lié à la modification du message d'erreur dans le formulaire de connexion/création
+		setLoading(state, action) {
+			state.isLoading = action.payload;
+		},
+		setMsg(state, action) {
 			state.msg = action.payload;
 		},
-        setAvatar(state, action) { // lié à la modification de l'avatar dans le dashboard
-            state.avatar = action.payload;
-        },
-		updateField(state, action) { // lié au formulaire de connexion/création
+		setAvatar(state, action) {
+			state.avatar = action.payload;
+		},
+		updateField(state, action) {
 			state.username = action.payload.username;
-			state.password = action.payload.password;
 		},
 	},
 });
 
-export const { login, logout, updateField, setMsg, setAvatar } = userSlice.actions;
+export const {
+	login,
+	loginFailed,
+	logout,
+	updateField,
+	setMsg,
+	setAvatar,
+	setLoading,
+} = userSlice.actions;
 export default userSlice.reducer;

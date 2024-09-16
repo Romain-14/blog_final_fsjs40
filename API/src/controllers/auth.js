@@ -37,10 +37,11 @@ const login = async (req, res) => {
         if(user){            
             const match = await bcrypt.compare(password, user.password);
             if(match){
-                const [[userInfos]] = await Auth.findUserInfoById(user.id);
-                req.session.user = {id: user.id, ...userInfos};
+                const [[userByID]] = await Auth.findUserInfoById(user.id);
+                console.log(userByID)
+                req.session.user = {id: user.id, ...userByID};
                 
-                res.status(200).json({ msg: "User logged in", userInfos });
+                res.status(200).json({ msg: "User logged in", isLogged: true, user: userByID });
             } else {
                 res.status(400).json({ msg: "Invalid credentials" });
             }
@@ -57,10 +58,21 @@ const logout = async (req, res) => {
         req.session.destroy();
         // suppression du cookie de session
         res.clearCookie("connect.sid");
-        res.status(200).json({ msg: "User logged out" });
+        res.status(200).json({ msg: "User logged out", isLogged: false });
     } catch(err){
         res.status(500).json({ msg: err });
     }
 }
 
-export { create, login, logout };
+const check_auth = async (req, res) => {
+	const { user } = req.session;
+    // console.log("check-auth", user)
+	if (user) {
+		// si user existe
+		res.json({ isLogged: true, user });
+	} else {
+		res.status(401).json({ isLogged: false });
+	}
+}
+
+export { create, login, logout, check_auth };

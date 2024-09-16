@@ -1,81 +1,73 @@
-import { useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { login, loginFailed, setMsg } from "../../store/Slices/user"; // Importer les actions nécessaires
+import useCloseMenu from "../../Hook/useCloseMenu";
 
-import { toggleMenu } from "../../store/Slices/menu";
-import { login, updateField, setMsg } from "../../store/Slices/user";
-import Form from "./Partials/Form";
+const Login = () => {
+	useCloseMenu();
+	const navigate = useNavigate();
+	const [username, setUsername] = useState("");
+	const [password, setPassword] = useState("");
+	const dispatch = useDispatch();
+	const { authError } = useSelector((state) => state.user); // Message d'erreur éventuel
 
-function Login() {
-    // on récupère les données du store
-    // le state du menu
-	const menu = useSelector((state) => state.menu);
-    // le state de l'utilisateur
-	const user = useSelector((state) => state.user);
-    // on récupère la fonction dispatch pour envoyer des actions
-	const dispatch = useDispatch(); 
-    // on récupère la fonction navigate pour la redirection
-	const navigate = useNavigate(); 
-
-    // au 1er montage du composant on ferme le menu si il est ouvert
-	useEffect(() => {
-        // pour ça on utiliser l'action toggleMenu du slice menu
-		if (menu.isOpen) dispatch(toggleMenu());
-
-        // on remet le mot de passe à vide pour éviter qu'il soit prérempli si on revient sur la page
-        return () => {
-            dispatch(updateField({username: user.username, password: ""}));
-        }
-	}, []);
-
-	async function submitHandler(e) {
+	const handleLogin = async (e) => {
 		e.preventDefault();
-        // on vérifie que les champs sont remplis 
-		if (!user.username || !user.password) {
-			setMsg("Remplissez tous les champs");
-			return; // on sort de la fonction si les champs ne sont pas remplis
-		}
-        
-        // sinon on envoie les données au serveur au format JSON sur une route post
-		const response = await fetch("/api/v1/authentication/login", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify(user),
-            // si la réponse n'est pas ok on converti la réponse en JSON
-		});
 
-        // on converti la réponse en JSON pour dans tous les cas récupérer le message d'erreur envoyé par le back
-        const data = await response.json();
-        // si la réponse est ok
-		if (response.status === 200) {
-            // on envoie l'action login avec les données de l'utilisateur envoyé par la route de login du back
+		try {
+			// Simuler une requête d'authentification vers le serveur
+			const response = await fetch("/api/v1/authentication/login", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ username, password }),
+			});
+
+			if (response.ok) {
+				const data = await response.json();
+				dispatch(login(data)); // Dispatch la connexion avec les infos de l'utilisateur
+				navigate("/"); // Rediriger vers la page d'accueil
+			} else {
+				const errorData = await response.json();
+				console.log(errorData);
+				dispatch(loginFailed({ error: errorData.msg })); // Gestion d'une erreur de login
+			}
+		} catch (error) {
+			console.log(error);
 			dispatch(
-				login({
-					username: data.userInfos.username,
-					avatar: data.userInfos.avatar,
-				})
-			);
-            // on redirige l'utilisateur sur la page d'accueil
-			navigate("/");
-		} else {
-			dispatch(setMsg(data.msg));
+				setMsg("Erreur lors de la connexion. Veuillez réessayer.")
+			); // Gestion d'une erreur de connexion
 		}
-	}
+	};
 
 	return (
-		<main>
-			<Form submitHandler={submitHandler}>
-				<button type="submit">Login</button>
-				<hr />
-				<p>
-					No account yet ? create one -&gt;{" "}
-					<Link to="/register">by clicking here</Link>
-				</p>
-			</Form>
-		</main>
+		<>
+			<form onSubmit={handleLogin}>
+				<label>Nom d&apos;utilisateur</label>
+				<input
+					type="text"
+					value={username}
+					onChange={(e) => setUsername(e.target.value)}
+					required
+				/>
+				<label>Mot de passe</label>
+				<input
+					type="password"
+					value={password}
+					onChange={(e) => setPassword(e.target.value)}
+					required
+				/>
+				{authError && <p>{authError}</p>}
+				<button type="submit">Se connecter</button>
+			</form>
+			<p>
+				Pas de compte ?{" "}
+				<button onClick={() => navigate("/register")}>
+					S&apos;inscrire
+				</button>
+			</p>
+		</>
 	);
-}
+};
 
 export default Login;

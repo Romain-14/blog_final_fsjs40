@@ -1,39 +1,56 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { login, logout } from "../store/Slices/user";
-import { useNavigate } from "react-router-dom";
+import { login } from "../store/Slices/user";
 
-// permets de maintenir la connexion de l'utilisateur si il rafraîchit la page, car le state est remis à zéro donc l'utilisateur est déconnecté à chaque rafraîchissement, ce hook permet de vérifier si l'utilisateur est connecté et de le reconnecter si c'est le cas
-const useAuthCheck = () => {
-	const dispatch = useDispatch();
-	const navigate = useNavigate();
-	const isLogged = useSelector((state) => state.user.isLogged);
+function useCheckAuth() {
+    const user = useSelector((state) => state.user);
+    const dispatch = useDispatch();
+	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
-		console.log("useAuthCheck");
-		async function checkAuth() {
-			const response = await fetch("/api/v1/authentication/check-auth", {
-				method: "POST",
-				credentials: "include", // envoi des cookies pour vérifier si l'utilisateur est connecté
-			});
-			const { auth, user } = await response.json();
-			console.log(auth, user);
-            
-			if (auth && !isLogged) { // si l'utilisateur est connecté sur le serveur mais sur le client (state redux), on le connecte sur le client
-                console.log("first")
-				dispatch( 
-					login({ username: user.username, avatar: user.avatar })
+		async function fetchAuthentication() {
+            // simule une latence de 1 seconde pour voir le chargement en localhost
+            await new Promise((resolve) => {
+                setTimeout(() => {
+                    resolve();
+                }, 1000);
+            });
+			try {
+				const response = await fetch(
+					"/api/v1/authentication/check-auth",
+					{
+                        // dans la requête on envoie les cookies pour que le serveur puisse s'en servir afin de vérifier l'état de connexion
+						credentials: "include",
+					}
 				);
-			} else if (!auth && !isLogged) {
-                // si l'utilisateur n'est pas connecté sur le serveur, on le déconnecte sur le client
-                // on le redirige vers la page d'accueil
-				dispatch(logout());
-				navigate("/");
+                // on envoi un 401 depuis le serveur en JSON si c'est le cas "utilisateur non connecté on stoppe la fonction avec un return"
+				if (response.status === 401) {
+					console.log("utilisateur non connecté sur le serveur");
+					return;
+				}
+                // si la réponse est ok, on récupère les données de l'utilisateur envoyé en JSON qu'on parse et on les stocke dans le state setUser, qui est un state d'un context User
+				if (response.ok) {
+					const data = await response.json();
+					dispatch(login(data));
+				} else {
+					console.log(`Server error: ${response.status}`);
+				}
+			} catch (error) {
+				console.log(`Fetch error: ${error.message}`);
+			} finally {
+                // le finally est utilisé afin d'executer une/plusieurs instructions dans tous les cas de figure (succès, erreur, etc...)
+                // ici on arrête "le chargement" et on oriente vers le bon router
+				setIsLoading(false);
 			}
 		}
-
-		checkAuth();
+        // simuler une latence de 2 secondes pour voir le chargement en localhost
+        // setTimeout(() => {
+            fetchAuthentication();
+        // }, 2000);
 	}, []);
-};
 
-export default useAuthCheck;
+
+    return [user, isLoading ];
+}
+
+export default useCheckAuth;

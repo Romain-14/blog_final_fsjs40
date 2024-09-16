@@ -46,7 +46,9 @@ function Nav() {
 			});
 			console.log(response);
 			if (response.status === 200) {
-				dispatch(logout());
+                const data = await response.json();
+                console.log(data)
+				dispatch(logout(data.isLogged));
 				dispatch(toggleMenu());
 				navigate("/");
 			}
@@ -70,7 +72,7 @@ function Nav() {
 				<NavLink to={"/"}>
 					<FontAwesomeIcon icon={faHome} /> Accueil
 				</NavLink>
-
+                
 				{user.isLogged ? (
 					<>
 						<NavLink to={"/dashboard"}>
