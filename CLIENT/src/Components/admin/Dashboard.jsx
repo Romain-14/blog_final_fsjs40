@@ -1,20 +1,22 @@
-import { Link } from "react-router-dom";
-import Header from "./Partials/Header";
+import { Outlet } from "react-router-dom";
 
 function Dashboard() {
 	return (
 		<>
-			<Header />
+			<main id="admin">
+				<hr />
 
-			<main>
-				<h1>Dashboard</h1>
-				<nav>
-					<Link to="/user">Utilisateurs</Link>
-					<Link to="/story">Articles
-					</Link>
-					<Link to="/category">Catégories</Link>
-					<Link to="/comment">Commentaires</Link>
-				</nav>
+				<section>
+					<h2>Statistiques</h2>
+					<ul>
+						<li>Nombre d&apos;utilisateurs : </li>
+						<li>Nombre d&apos;articles : </li>
+						<li>Nombre de catégories : </li>
+						<li>Nombre de commentaires : </li>
+					</ul>
+				</section>
+
+				<Outlet />
 			</main>
 		</>
 	);

@@ -20,12 +20,13 @@ function UserRouter() {
 				<Route path="login" element={<Login />} />
 				<Route path="register" element={<Register />} />
 
+				
 				<Route
 					path="dashboard"
 					element={<ProtectedRoute element={Dashboard} />}
 				/>
 
-				<Route path="*" element={<h1>404</h1>} />
+				<Route path="*" element={<h1>404 NOT FOUND USER</h1>} />
 			</Routes>
 			<Footer />
 		</>

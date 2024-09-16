@@ -8,13 +8,15 @@ import {
 	remove,
 } from "../controllers/category.js";
 
+import withAdminAuth from "../middlewares/withAdminAuth.js";
+
 const router = Router();
 
-router.get("/all", getAll);
+router.get("/list", getAll);
 router.get("/:id", getById);
 
-router.post("/create", create);
-router.patch("/update/:id", update);
-router.delete("/delete/:id", remove);
+router.post("/create", withAdminAuth, create);
+router.patch("/update/:id", withAdminAuth, update);
+router.delete("/delete/:id", withAdminAuth, remove);
 
 export default router;

@@ -17,10 +17,9 @@ function Header() {
 				method: "POST",
 				credentials: "include",
 			});
-			console.log(response);
+            
 			if (response.status === 200) {
                 const data = await response.json();
-                console.log(data)
 				dispatch(logout(data.isLogged));
 				dispatch(toggleMenu());
 				navigate("/");
@@ -29,13 +28,15 @@ function Header() {
 		fetchLogout();
 	}
 	return (
-		<header>
-			<div>
+		<header className="admin">
+            <h1>Dashboard</h1>
 				<nav>
-					<Link to="/">Accueil</Link>
+					<Link to="/user">Utilisateurs</Link>
+					<Link to="/story">Articles</Link>
+					<Link to="/category">Catégories</Link>
+					<Link to="/comment">Commentaires</Link>
 				</nav>
-			</div>
-			<h1>Dashboard panel</h1>
+			
 			<button onClick={onClickLogout}>
 				<FontAwesomeIcon icon={faPowerOff} />
 			</button>

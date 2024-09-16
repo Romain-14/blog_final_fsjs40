@@ -2,12 +2,12 @@ import pool from "../config/db.js";
 
 class User {
 	static async findAll() {
-		const UPDATE_AVATAR = "UPDATE user SET avatar_id = ? WHERE id = ?";
-		await pool.execute(UPDATE_AVATAR, [avatar, id]);
+		const SELECT_ALL = "SELECT user.id, username, role, label as avatar FROM user LEFT JOIN avatar ON user.avatar_id = avatar.id";
+		return await pool.query(SELECT_ALL);
 	}
 
     static async findOne(id) {
-        const FIND_ONE = "SELECT label FROM avatar WHERE id = ?";
+        const FIND_ONE = "SELECT user.id, username, role, label as avatar FROM user LEFT JOIN avatar ON user.avatar_id = avatar.id WHERE id = ?";
         return await pool.execute(FIND_ONE, [id]);
     }
 

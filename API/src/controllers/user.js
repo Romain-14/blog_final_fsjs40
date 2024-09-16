@@ -1,5 +1,12 @@
 import User from '../model/User.js';
 
+
+const getAll = async (req, res) => {
+    const [users] = await User.findAll();
+    console.log(users)
+    res.json(users);
+}
+
 const updateAvatar = async (req, res) => {
     const { id } = req.session.user;
     const { avatar_id } = req.params;
@@ -14,4 +21,4 @@ const updateAvatar = async (req, res) => {
     
 }
 
-export { updateAvatar };
+export { getAll, updateAvatar };
