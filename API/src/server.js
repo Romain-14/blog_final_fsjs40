@@ -17,6 +17,8 @@ const PORT = process.env.PORT || process.env.LOCAL_PORT;
 
 // ici on autorise à communiquer avec notre serveur uniquement l'origin http://localhost:5173
 // on autorise les cookies pour les requêtes cross-origin (credentials: true)
+// on autorise les méthodes GET, POST, PATCH, DELETE et OPTIONS
+// on autorise le header Content-Type
 app.use(
 	cors({
 		origin: "http://localhost:5173",
@@ -36,6 +38,7 @@ app.use(
 			httpOnly: true,
 			secure: false,
 		},
+        // utilisation d'un store pour stocker les sessions dans la base de données MySQL, plus optimisé que le store par défaut en mémoire
 		store: new MySQLStore({
 			host: process.env.DB_HOST,
 			port: process.env.DB_PORT,
@@ -47,18 +50,18 @@ app.use(
 );
 
 app.use("/img", express.static(path.join(process.cwd(), "public/img")));
+// 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+// middleware pour afficher le nombre de sessions actives et la session de l'utilisateur effectuant la requête
+// A SUPPRIMER EN PRODUCTION
 app.use(async (req, res, next) => {
 	console.log("user session", req.session.user);
-
 	try {
 		const [[result]] = await pool.query(
 			"SELECT COUNT(session_id) AS session FROM sessions"
 		);
-
-		// const sessions = rows.map(row => JSON.parse(row.data));
 		console.log("Active sessions:", result.session);
 		console.log(
 			"User session:",

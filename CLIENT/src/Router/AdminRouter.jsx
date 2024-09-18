@@ -5,17 +5,18 @@ import Category from "../Components/admin/Category";
 import Comment from "../Components/admin/Comment";
 import Story from "../Components/admin/Story";
 import Header from "../Components/admin/Partials/Header";
+import ProtectedRoute from "../HOC/ProtectedRoute";
 
 function Router() {
 	return (
 		<>
 			<Header />
 			<Routes>
-				<Route path="/" element={<Dashboard />}>
+				<Route path="/" element={<ProtectedRoute element={Dashboard} />}>
                     {/* ici chaque route correspondant au click sur un link sera monté dans le Composant Outlet (cf. Composant Dashboard) */}
 					<Route path="/user" element={<User />} />
 					<Route path="/story" element={<Story />} />
-					<Route path="/category" element={<Category />} />
+					<Route path="/category" element={<ProtectedRoute element={Category} />} />
 					<Route path="/Comment" element={<Comment />} />
 				</Route>
 				<Route path="*" element={<p>NOT FOUND ADMIN</p>} />

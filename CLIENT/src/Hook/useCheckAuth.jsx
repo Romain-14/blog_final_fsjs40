@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../store/Slices/user";
+import { useNavigate } from "react-router-dom";
 
 function useCheckAuth() {
+    const navigate = useNavigate();
     const user = useSelector((state) => state.user);
     const dispatch = useDispatch();
 	const [isLoading, setIsLoading] = useState(true);
@@ -26,6 +28,7 @@ function useCheckAuth() {
                 // on envoi un 401 depuis le serveur en JSON si c'est le cas "utilisateur non connecté on stoppe la fonction avec un return"
 				if (response.status === 401) {
 					console.log("utilisateur non connecté sur le serveur");
+                    navigate("/");
 					return;
 				}
                 // si la réponse est ok, on récupère les données de l'utilisateur envoyé en JSON qu'on parse et on les stocke dans le state setUser, qui est un state d'un context User

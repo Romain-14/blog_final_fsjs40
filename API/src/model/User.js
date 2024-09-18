@@ -7,7 +7,7 @@ class User {
 	}
 
     static async findOne(id) {
-        const FIND_ONE = "SELECT user.id, username, role, label as avatar FROM user LEFT JOIN avatar ON user.avatar_id = avatar.id WHERE id = ?";
+        const FIND_ONE = "SELECT user.id, username, role, label FROM user LEFT JOIN avatar ON user.avatar_id = avatar.id WHERE user.id = ?";
         return await pool.execute(FIND_ONE, [id]);
     }
 

@@ -59,11 +59,11 @@ h6 {
 }
 
 .disabled {
-    cursor: not-allowed;
-    opacity: 0.5;
+	cursor: not-allowed;
+	opacity: 0.5;
 }
 
-header:not(.admin) {
+header {
 	display: flex;
 	justify-content: space-between;
 	padding: 1rem;
@@ -76,7 +76,7 @@ header:not(.admin) {
 		border-radius: 1rem;
 		border: 1px solid $primary-color;
 		width: 5rem;
-        height: 5rem;
+		height: 5rem;
 		vertical-align: middle;
 		cursor: pointer;
 	}
@@ -197,42 +197,139 @@ form {
 // DASHBOARD
 
 #dashboard {
-    img {
-        width: 100px;
-        height: 100px;
-        border-radius: 50%;
-    }
+	img {
+		width: 100px;
+		height: 100px;
+		border-radius: 50%;
+	}
 }
 
 .error {
-    color: red;
-    font-weight: bold;
-    text-align: center;
-    margin: 0;
+	color: red;
+	font-weight: bold;
+	text-align: center;
+	margin: 0;
+}
+
+#story {
+	article {
+		background-color: #fff;
+		padding: 1rem;
+		margin-bottom: 1rem;
+		border-radius: 0.5rem;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	}
+
+	aside {
+		background-color: #fff;
+		padding: 1rem;
+		border-radius: 0.5rem;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	}
+
+	h2 {
+		margin-top: 0;
+	}
+
+	/* Styles pour les commentaires */
+	.comments {
+		margin-bottom: 1rem;
+	}
+
+	.comments h3 {
+		display: flex;
+		align-items: center;
+		margin: 0;
+		font-size: 1.4rem;
+	}
+
+	.comments h3 img {
+		width: 35px;
+		height: 35px;
+		border-radius: 50%;
+		margin-right: 0.5rem;
+	}
+
+	.comments p {
+		margin: 0.5rem 0;
+	}
+
+	.comments button {
+		background-color: #007bff;
+		color: #fff;
+		border: none;
+		padding: 0.5rem 1rem;
+		border-radius: 0.25rem;
+		cursor: pointer;
+		margin-top: 0.5rem;
+	}
+
+	.comments button:hover {
+		background-color: #0056b3;
+	}
+
+	.replies {
+		// margin-left: 2rem;
+		border-left: 2px solid #ddd;
+		padding-left: 1rem;
+	}
+
+	/* Styles pour le formulaire de commentaire */
+
+	form textarea {
+		width: 100%;
+		height: 100px;
+		padding: 0.5rem;
+		border: 1px solid #ddd;
+		border-radius: 0.25rem;
+		resize: none;
+	}
+
+	form {
+		gap: 0;
+	}
+
+	form button {
+		background-color: #28a745;
+		color: #fff;
+		border: none;
+		padding: 0.5rem 1rem;
+		border-radius: 0.25rem;
+		cursor: pointer;
+	}
+
+	form button:hover {
+		background-color: #218838;
+	}
 }
 
 // COMMENTS
 
-.comments {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    padding: 1.5rem;
-    border: 1px solid $primary-color;
-    border-radius: 1rem;
-    margin: 1.5rem;
-    background-color: #fff;
+// .comments {
+//     display: flex;
+//     flex-direction: column;
+//     gap: 1.5rem;
+//     padding: 1.5rem;
+//     border: 1px solid $primary-color;
+//     border-radius: 1rem;
+//     margin: 1.5rem;
+//     background-color: #fff;
 
-    .comment {
-        display: flex;
-        flex-direction: column;
-        gap: 1.5rem;
-        padding: 1.5rem;
-        border: 1px solid $primary-color;
-        border-radius: 1rem;
-        background-color: #f4f4f4;
-    }
-}
+//     img {
+//         width: 20px;
+//         display: inline-block;
+//     }
+
+//     .comment {
+//         display: flex;
+//         flex-direction: column;
+//         gap: 1.5rem;
+//         padding: 1.5rem;
+//         border: 1px solid $primary-color;
+//         border-radius: 1rem;
+//         background-color: #f4f4f4;
+//     }
+// }
 
 @media (min-width: 600px) {
 	nav.screen {
@@ -240,78 +337,172 @@ form {
 	}
 }
 
-//  
+//
 
 .loader {
-    position: absolute;
-    top: 30%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 48px;
-    height: 48px;
-    border: 5px solid #d13434;
-    border-bottom-color: transparent;
-    border-radius: 50%;
-    display: inline-block;
-    box-sizing: border-box;
-    animation: rotation 1s linear infinite;
-    z-index: 1000;
-    }
+	position: absolute;
+	top: 30%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 48px;
+	height: 48px;
+	border: 5px solid #d13434;
+	border-bottom-color: transparent;
+	border-radius: 50%;
+	display: inline-block;
+	box-sizing: border-box;
+	animation: rotation 1s linear infinite;
+	z-index: 1000;
+}
 
-    @keyframes rotation {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
-    } 
-
+@keyframes rotation {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
 
 // ADMIN
 header.admin {
-    padding: 1rem;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    gap: 1.5rem;
+	padding: 1rem;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	gap: 1.5rem;
 
-    nav {
+	nav {
+		display: flex;
+		a {
+			padding: 1rem;
+			margin: 1rem;
+		}
+	}
 
-        a {
-
-            padding: 1rem;
-            margin: 1rem;
-        }
-    }
-
-    button {
-        width: 5rem;
-        height: 5rem;
-        padding: 1rem;
-        border-radius: 1rem;
-    }
-
-  
+	button {
+		width: 5rem;
+		height: 5rem;
+		padding: 1rem;
+		border-radius: 1rem;
+	}
 }
 
 #admin {
-    img {
-        width: 35px;
-    }
+	img {
+		width: 35px;
+	}
+
+	main {
+		padding: 2rem;
+	}
+
+	section {
+		margin-bottom: 2rem;
+	}
+
+	h2 {
+		margin-bottom: 1rem;
+	}
+
+	table {
+		width: 100%;
+		border-collapse: collapse;
+		margin-bottom: 1rem;
+	}
+
+	table th,
+	table td {
+		border: 1px solid #ddd;
+		padding: 0.5rem;
+		text-align: left;
+	}
+
+	table th {
+		background-color: #f4f4f4;
+	}
+
+	table tbody tr:nth-child(even) {
+		background-color: #f9f9f9;
+	}
+
+	table tbody tr:hover {
+		background-color: #f1f1f1;
+	}
+
+	button {
+		padding: 0.5rem 1rem;
+		border: none;
+		background-color: #333;
+		color: #fff;
+		cursor: pointer;
+	}
+
+	button:hover {
+		background-color: #555;
+	}
+
+	.cta {
+		display: flex;
+		justify-content: center;
+		gap: 1.5rem;
+	}
+	button {
+		padding: 0.5rem 1rem;
+		border: none;
+		background-color: #333;
+		color: #fff;
+		cursor: pointer;
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		border-radius: 0.25rem;
+		transition: background-color 0.3s ease;
+
+		i {
+			margin-right: 0.5rem;
+		}
+	}
+
+	button:hover {
+		background-color: #555;
+	}
+
+	.btn-add {
+		background-color: #28a745;
+	}
+
+	.btn-add:hover {
+		background-color: #218838;
+	}
+
+	.btn-edit {
+		background-color: #ffc107;
+	}
+
+	.btn-edit:hover {
+		background-color: #e0a800;
+	}
+
+	.btn-delete {
+		background-color: #dc3545;
+	}
+
+	.btn-delete:hover {
+		background-color: #c82333;
+	}
 }
 
 .modal-form {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #fff;
-    padding: 1.5rem;
-    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.822);
-    border-radius: 1rem;
-    form {
-        border: none;
-
-    }
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background-color: #fff;
+	padding: 1.5rem;
+	box-shadow: 0 0 1rem rgba(0, 0, 0, 0.822);
+	border-radius: 1rem;
+	form {
+		border: none;
+	}
 }

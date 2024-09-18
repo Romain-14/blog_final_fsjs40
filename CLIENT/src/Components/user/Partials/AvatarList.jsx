@@ -39,7 +39,7 @@ function AvatarList() {
 		const data = await response.json();
         console.log(data)
         // mise à jour du state avatar avec le nouvel avatar
-		dispatch(setAvatar(data.newAvatar));
+		dispatch(setAvatar(data.avatar));
 	}
 
 	return (

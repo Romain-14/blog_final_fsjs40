@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import Loading from "../Loading";
 
 import Modal from "./AddCategory";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 function Category() {
 	const [categories, setCategories] = useState(null);
@@ -41,7 +43,7 @@ function Category() {
 	return (
         <section>
 			<h2>Liste des catégories</h2>
-            <button onClick={() => setIsModalToggle(!isModalToggle)}>Ajouter une catégorie</button>
+            <button className="btn-add" onClick={() => setIsModalToggle(!isModalToggle)}><FontAwesomeIcon icon={faPlus} /> Ajouter une catégorie</button>
             <table>
                 <thead>
                     <tr>
@@ -55,9 +57,9 @@ function Category() {
                         <tr key={category.id}>
                             <td>{category.id}</td>
                             <td>{category.label}</td>
-                            <td>
-                                <button>Modifier</button>
-                                <button onClick={()=> onClickDeleteCategory(category.id) }>Supprimer</button>
+                            <td className="cta">
+                                <button className="btn-edit"><FontAwesomeIcon icon={faEdit} /> Modifier</button>
+                                <button className="btn-trash" onClick={()=> onClickDeleteCategory(category.id) }><FontAwesomeIcon icon={faTrash} /> Supprimer</button>
                             </td>
                         </tr>
                     ))}

@@ -1,9 +1,7 @@
 import User from '../model/User.js';
 
-
 const getAll = async (req, res) => {
     const [users] = await User.findAll();
-    console.log(users)
     res.json(users);
 }
 
@@ -15,10 +13,9 @@ const updateAvatar = async (req, res) => {
     if(response.affectedRows === 1) {
         const [[avatar]] = await User.findOne(avatar_id);
         req.session.user.avatar = avatar.label;
-        res.json({ msg: "Avatar updated", newAvatar: avatar.label  });
+        res.json({ msg: "Avatar updated", avatar: avatar.label  });
     } else 
-    res.status(500).json({ msg: "Avatar not updated"});
-    
+    res.status(500).json({ msg: "Avatar not updated"});    
 }
 
 export { getAll, updateAvatar };
