@@ -38,7 +38,6 @@ const login = async (req, res) => {
 			const match = await bcrypt.compare(password, user.password);
 			if (match) {
 				const [[userByID]] = await Auth.findUserInfoById(user.id);
-				console.log(userByID);
 				req.session.user = { id: user.id, ...userByID };
 
 				res.status(200).json({
@@ -61,7 +60,7 @@ const logout = async (req, res) => {
 		req.session.destroy();
 		// suppression du cookie de session
 		res.clearCookie("connect.sid");
-		res.status(200).json({ msg: "User logged out", isLogged: false });
+		res.json({ msg: "User logged out", isLogged: false });
 	} catch (err) {
 		res.status(500).json({ msg: err });
 	}

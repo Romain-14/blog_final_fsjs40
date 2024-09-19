@@ -1,9 +1,9 @@
 import { Routes, Route } from "react-router-dom";
 import Dashboard from "../Components/admin/Dashboard";
-import User from "../Components/admin/User";
-import Category from "../Components/admin/Category";
-import Comment from "../Components/admin/Comment";
-import Story from "../Components/admin/Story";
+import User from "../Components/admin/user/List";
+import Category from "../Components/admin/category/List";
+import Comment from "../Components/admin/comment/List";
+import Story from "../Components/admin/story/List";
 import Header from "../Components/admin/Partials/Header";
 import ProtectedRoute from "../HOC/ProtectedRoute";
 

@@ -14,7 +14,7 @@ import withUserAuth from "../middlewares/withUserAuth.js";
 
 const router = Router();
 
-router.get("/all", getAll);
+router.get("/list", getAll);
 router.get("/:id", getById);
 
 router.post("/addImage", addImage);

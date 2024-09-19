@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Link } from "react-router-dom";
 // DOMPurify est un package qui permet de nettoyer le code HTML pour éviter les attaques XSS
 // react prévient déjà des attaques XSS mais DOMPurify est plus complet et nécessaire car on récupère des données HTML du serveur et on utilise pour les afficher dangerouslySetInnerHTML
 import DOMPurify from "dompurify";
@@ -12,6 +11,10 @@ function Story() {
 
 	const [story, setStory] = useState();
 	const [comments, setComments] = useState(null);
+
+    useEffect(() => {
+        if(story) document.title = "Article - " + story?.title;
+    }, [story]);
 
 	useEffect(() => {
 		const fetchStory = async () => {

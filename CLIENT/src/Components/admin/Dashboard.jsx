@@ -4,7 +4,6 @@ function Dashboard() {
 	return (
 		<>
 			<main id="admin">
-				<hr />
 
 				<section>
 					<h2>Statistiques</h2>

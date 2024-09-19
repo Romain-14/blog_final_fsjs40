@@ -12,15 +12,14 @@ const getAllFromStoryId = async (req, res) => {
 
 const addComment = async (req, res) => {
 	try {
-        console.log(req.params)
-        const {message, parent_id} = req.body;
-        const data = {
-            user_id : req.session.user.id,
-            story_id : parseInt(req.params.story_id),
-            message,
-            parent_id
-        }
-        
+		const { message, parent_id } = req.body;
+		const data = {
+			user_id: req.session.user.id,
+			story_id: parseInt(req.params.story_id),
+			message,
+			parent_id,
+		};
+
 		const [result] = await Comment.addCommentToStory(data);
 		if (result.affectedRows === 0)
 			throw new Error("Impossible d'ajouter le commentaire");

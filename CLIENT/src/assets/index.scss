@@ -464,12 +464,19 @@ header.admin {
 		}
 	}
 
+    button {
+        text-transform: uppercase;
+        font-weight: bold;
+        height: 3rem;
+        // text-shadow: 1px 0 1px rgb(0, 0, 0);
+    }
+
 	button:hover {
 		background-color: #555;
 	}
 
 	.btn-add {
-		background-color: #28a745;
+		background-color: #1e822b;
 	}
 
 	.btn-add:hover {
@@ -477,7 +484,8 @@ header.admin {
 	}
 
 	.btn-edit {
-		background-color: #ffc107;
+		background-color: #fed65f;
+        color: #333;
 	}
 
 	.btn-edit:hover {
@@ -485,11 +493,13 @@ header.admin {
 	}
 
 	.btn-delete {
-		background-color: #dc3545;
+		border: 1px solid #dc3545;
+        background-color: #fff;
+        color: #333;
 	}
 
 	.btn-delete:hover {
-		background-color: #c82333;
+		background-color: #e2e0e0;
 	}
 }
 

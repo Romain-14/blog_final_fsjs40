@@ -1,7 +1,9 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faClose } from "@fortawesome/free-solid-svg-icons";
 
-function AddCategory({setIsModalToggle, fetchCategories}) {
+function AddCategory({setToggleAddModal, fetchCategories}) {
 	const [label, setLabel] = useState("");
 
 	async function submitCategory(e) {
@@ -19,14 +21,15 @@ function AddCategory({setIsModalToggle, fetchCategories}) {
 		});
         if(response.ok) {
             setLabel("");
-            setIsModalToggle(false);
+            setToggleAddModal(false);
             fetchCategories();
         }
 	}
 	return (
 		<aside className="modal-form">
+            <button onClick={() => setToggleAddModal(false)}><FontAwesomeIcon icon={faClose} /></button>
 			<form onSubmit={submitCategory}>
-				<label htmlFor="label">Nom de la catégorie :</label>
+				<label htmlFor="label">Nom de la catégorie à ajouter :</label>
 				<input
 					type="text"
 					name="label"
@@ -41,7 +44,7 @@ function AddCategory({setIsModalToggle, fetchCategories}) {
 }
 
 AddCategory.propTypes = {
-    setIsModalToggle: PropTypes.func.isRequired,
+    setToggleAddModal: PropTypes.func.isRequired,
     fetchCategories: PropTypes.func.isRequired
 }
 

@@ -37,7 +37,7 @@ function Header() {
 					<Link to="/comment">Commentaires</Link>
 				</nav>
 			
-			<button onClick={onClickLogout}>
+			<button onClick={onClickLogout} aria-label="Bouton de déconnexion">
 				<FontAwesomeIcon icon={faPowerOff} />
 			</button>
 		</header>

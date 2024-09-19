@@ -3,14 +3,14 @@ import { Link } from "react-router-dom";
 import DOMPurify from "dompurify";
 import useCloseMenu from "../../Hook/useCloseMenu";
 
-const Home = () => {
+function Home(){
     useCloseMenu();
 	const [stories, setStories] = useState([]);
 
 	useEffect(() => {
 		const fetchStories = async () => {
 			const response = await fetch(
-				"http://localhost:9000/api/v1/story/all"
+				"/api/v1/story/list"
 			);
 			const data = await response.json();
 			setStories(data);

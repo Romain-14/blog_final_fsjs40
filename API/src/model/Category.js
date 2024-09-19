@@ -2,7 +2,7 @@ import pool from "../config/db.js";
 
 class Category {
 	static async findAll() {
-		const SELECT_ALL = "SELECT * FROM category";
+		const SELECT_ALL = "SELECT * FROM category ORDER BY id ASC";
 		return await pool.query(SELECT_ALL);
 	}
 
