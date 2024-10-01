@@ -11,7 +11,7 @@ const updateAvatar = async (req, res) => {
     const [response] = await User.updateAvatar(avatar_id, id);
     
     if(response.affectedRows === 1) {
-        const [[avatar]] = await User.findOne(avatar_id);
+        const [[avatar]] = await User.findOne(id);
         req.session.user.avatar = avatar.label;
         res.json({ msg: "Avatar updated", avatar: avatar.label  });
     } else 
